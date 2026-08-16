@@ -1,16 +1,12 @@
-import late_fee
+# app.py
 import streamlit as st
+from late_fee import calculate_late_fee   # reuses your existing function
 
-# Page Title
 st.title("Library Late Fee Calculator")
 
-# Number Input Field
-days_late = st.number_input(
-    "How many days late?", min_value=0, value=0, step=1
-)
+days_late = st.number_input("How many days late?", min_value=0, value=0, step=1)
+fee = calculate_late_fee(days_late)
 
-# Calculate fee using the function from late_fee.py
-fee = late_fee.calculate_late_fee(days_late)
-
-# Display Result
-st.header(f"Late fee: Rs. {fee}")
+st.write(f"### Late fee: Rs. {fee}")
+if fee == 500:
+    st.warning("Maximum fee reached (capped at Rs. 500)")
